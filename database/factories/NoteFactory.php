@@ -18,7 +18,7 @@ class NoteFactory extends Factory
             'title' => $this->faker->sentence($this->faker->randomDigit(), $variableNbWords = true),
             'text' => $this->faker->text(500),
             'category' => $this->faker->randomElement(array('laravel', 'vue')),
-            'tags' => $this->faker->word(),
+            'tags' => implode(',', $this->faker->words($this->faker->randomDigit())),
             'auth_only' => $this->faker->boolean(35),
         ];
     }
