@@ -5281,9 +5281,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "DashboardList",
-  props: ['list']
+  data: function data() {
+    return {
+      notes: []
+    };
+  },
+  mounted: function mounted() {
+    this.getList();
+  },
+  methods: {
+    getList: function getList() {
+      var _this = this;
+
+      axios.get('/api/notes').then(function (response) {
+        _this.notes = response.data.data;
+        console.log(_this.notes);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    showNote: function showNote(id) {
+      axios.get('/api/notes/' + id);
+    },
+    deleteNote: function deleteNote(id) {
+      axios["delete"]('/api/notes/' + id).then(function (response) {
+        return console.log(response);
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+      this.notes.splice(id - 1, 1);
+    }
+  }
 });
 
 /***/ }),
@@ -28337,13 +28383,42 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("table", { staticClass: "table table-striped" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c(
-      "ul",
-      _vm._l(_vm.list, function (item) {
-        return _c("li", { key: item.id, staticClass: "list-unstyled" }, [
-          _c("a", { attrs: { href: "/notes/" + item.id } }, [
-            _vm._v(_vm._s(item.title)),
+      "tbody",
+      _vm._l(_vm.notes, function (note) {
+        return _c("tr", { key: note.id }, [
+          _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(note.id))]),
+          _vm._v(" "),
+          _c("td", [
+            _c("a", { attrs: { href: "api/notes/" + note.id } }, [
+              _vm._v(_vm._s(note.title)),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(note.tags))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(note.created_at))]),
+          _vm._v(" "),
+          _c("td", { staticClass: "d-flex" }, [
+            _c("button", { staticClass: "btn btn-info mx-1" }, [
+              _vm._v("Edit"),
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-dark mx-1",
+                on: {
+                  click: function ($event) {
+                    return _vm.deleteNote(note.id)
+                  },
+                },
+              },
+              [_vm._v("Delete")]
+            ),
           ]),
         ])
       }),
@@ -28351,7 +28426,26 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tags")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Created at")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Edit")]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -28533,7 +28627,7 @@ var render = function () {
         [
           _c("h3", [_vm._v("Tags: ")]),
           _vm._v(" "),
-          _vm._l(_vm.note.tags, function (tag, i) {
+          _vm._l(_vm.note.tags.split(","), function (tag, i) {
             return _c(
               "span",
               { key: i, staticClass: "badge rounded-pill bg-danger m-1" },

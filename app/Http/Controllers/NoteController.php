@@ -15,10 +15,10 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $allNotes = DB::table('notes')->orderBy('created_at', 'desc')->get();
-        return view('dashboard',[
-           'allNotes' => $allNotes,
-        ]);
+//        $allNotes = DB::table('notes')->orderBy('created_at', 'desc')->get();
+//        return view('dashboard',[
+//           'allNotes' => $allNotes,
+//        ]);
     }
 
     /**
@@ -28,7 +28,7 @@ class NoteController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -50,15 +50,15 @@ class NoteController extends Controller
      */
     public function show($id)
     {
-        $note = DB::table('notes')->where('id', $id)->get();
-
-        foreach ($note as $n) {
-            $n->tags = explode(',', $n->tags);
-        }
-
-        return view('note',[
-            'nt' => $note[0]
-        ]);
+//        $note = DB::table('notes')->where('id', $id)->get();
+//
+//        foreach ($note as $n) {
+//            $n->tags = explode(',', $n->tags);
+//        }
+//
+//        return view('note',[
+//            'nt' => $note[0],
+//        ]);
     }
 
     /**
@@ -69,7 +69,11 @@ class NoteController extends Controller
      */
     public function edit($id)
     {
-        //
+//        $note = DB::table('notes')->where('id', $id)->get();
+//
+//        return view('note',[
+//            'nt' => $note[0],
+//        ]);
     }
 
     /**
@@ -92,6 +96,7 @@ class NoteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        echo $id;
+//        $note = DB::table('notes')->delete($id);
     }
 }

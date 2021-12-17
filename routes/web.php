@@ -6,14 +6,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [App\Http\Controllers\NoteController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', function() {
+    return view('dashboard');
+})->name('dashboard');
 
 
 require __DIR__.'/auth.php';
 
 Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/laravel', [App\Http\Controllers\LinksController::class, 'viewLaravel'])->name('laravel');
 Route::get('/vue', [App\Http\Controllers\LinksController::class, 'viewVue'])->name('vue');
