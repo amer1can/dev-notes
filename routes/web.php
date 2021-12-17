@@ -19,4 +19,3 @@ Route::get('/laravel', [App\Http\Controllers\LinksController::class, 'viewLarave
 Route::get('/vue', [App\Http\Controllers\LinksController::class, 'viewVue'])->name('vue');
 
 Route::resource('/notes', App\Http\Controllers\NoteController::class);
-

@@ -27,7 +27,20 @@ class NoteController extends Controller
     public function store(Request $request)
     {
 
-        return $request;
+        $note = new Note;
+
+        $note->title = $request->newTitle;
+        $note->text = $request->newText;
+        $note->category = 'vue';
+        $note->tags = 'onebanana12';
+        $note->auth_only = 1;
+        $note->created_at = now();
+        $note->updated_at = now();
+        $note->save();
+
+        return redirect('dashboard')->with('status', 'Профиль изменён!');
+
+//        dd($request);
 
     }
 
